@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "235617140156",
+    "firebase_url": "https://themes-8c753.firebaseio.com",
+    "project_id": "themes-8c753",
+    "storage_bucket": "themes-8c753.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:235617140156:android:8461a3ea0d7589f19f7fb9",
+        "android_client_info": {
+          "package_name": "com.philipstudio.themes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "235617140156-4da35gg3vcrajrbmqdp3rj94prs277of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2iMy0MIG689heHnZLTwZbunprmnM_KrI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "235617140156-4da35gg3vcrajrbmqdp3rj94prs277of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
