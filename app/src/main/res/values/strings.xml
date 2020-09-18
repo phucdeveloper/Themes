@@ -16,12 +16,16 @@
     <string name="sign_in_with_phone_number">Sign in with phone number</string>
     <string name="enter_your_phone_number">Enter your phone number</string>
     <string name="launcher">Launcher</string>
-    <string name="wallpaper">Wallpaper</string>
     <string name="user">User</string>
     <string name="selected">Selected</string>
     <string name="text">New</string>
+    <string name="search_everything_here">Search everything here...</string>
+    <string name="category">Category</string>
     <string name="top">Top</string>
-    <string name="categories">Categories</string>
+    <string name="wallpaper">Wallpaper</string>
+    <string name="_new">New</string>
+    <string name="add_favorite">Add favorite</string>
+    <string name="enable_mode_auto_set_wallpaper">Enable mode auto set wallpaper</string>
 
     <string-array name="dialing_country_code">
         <item>BE(+32)</item>

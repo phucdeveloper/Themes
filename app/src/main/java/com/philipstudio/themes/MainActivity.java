@@ -1,34 +1,41 @@
 package com.philipstudio.themes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.LinearLayout;
 
-import com.google.android.material.tabs.TabLayout;
-import com.philipstudio.themes.adapter.DiscoverAdapter;
-import com.philipstudio.themes.adapter.SliderAdapter;
-import com.philipstudio.themes.model.Image;
+import com.github.abdularis.civ.CircleImageView;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.philipstudio.themes.adapter.CategoryAdapter;
+import com.philipstudio.themes.model.Category;
+import com.philipstudio.themes.utils.UserUtil;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView rVListImageDiscover;
-    ViewPager vPSlider;
-    TabLayout tabLayoutIndicator;
-    Spinner spinnerCategory;
-    Timer timer;
+    RecyclerView rVListCategory;
+    LinearLayout linearLayout;
+    BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
+    CircleImageView circleImageView;
 
-    ArrayList<Image> imageList;
-    String[] categoryArray = {"Anime", "Scenery", "Beautiful Girl", "Image One", "Image Two", "Category",
-            "Category One", "Category Two"};
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference dataRef;
+
+    UserUtil userUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,61 +43,63 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
 
-        imageList = new ArrayList<>();
+        setUpRecyclerView();
 
-        setUpViewPagerSlider(imageList);
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(userUtil.getUserUtil())){
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
-        setUpRecyclerView(imageList);
-
-        setUpSpinnerCategory();
-        tabLayoutIndicator.setupWithViewPager(vPSlider, true);
-
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new SliderTimer(), 4000, 6000);
     }
 
-    private void setUpSpinnerCategory(){
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, categoryArray);
-        spinnerCategory.setAdapter(arrayAdapter);
-    }
+    private void setUpRecyclerView(){
+        rVListCategory.setHasFixedSize(true);
 
-    private void setUpRecyclerView(ArrayList<Image> arrayList){
-        rVListImageDiscover.setHasFixedSize(true);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
+        rVListCategory.setLayoutManager(layoutManager);
 
-        StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2, RecyclerView.VERTICAL);
-        rVListImageDiscover.setLayoutManager(layoutManager);
+        dataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ArrayList<Category> arrayList = new ArrayList<>();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Category category = dataSnapshot.getValue(Category.class);
+                    arrayList.add(category);
+                }
 
-        DiscoverAdapter adapter = new DiscoverAdapter(arrayList, this);
-        rVListImageDiscover.setAdapter(adapter);
-    }
+                CategoryAdapter adapter = new CategoryAdapter(arrayList, MainActivity.this);
+                rVListCategory.setAdapter(adapter);
 
-    private void setUpViewPagerSlider(ArrayList<Image> arrayList){
-        SliderAdapter adapter = new SliderAdapter(arrayList, this);
-        vPSlider.setAdapter(adapter);
+                adapter.setOnItemCategoryClickListener(new CategoryAdapter.OnItemCategoryClickListener() {
+                    @Override
+                    public void onItemClick(int pos) {
+                        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void initView(){
-        vPSlider = findViewById(R.id.view_pager_slider);
-        rVListImageDiscover = findViewById(R.id.recyclerview_list_image_discover);
-        tabLayoutIndicator = findViewById(R.id.tab_layout_indicator);
-        spinnerCategory = findViewById(R.id.spinner_category);
-    }
+        rVListCategory = findViewById(R.id.recyclerview_list_category);
+        linearLayout = findViewById(R.id.linear_layout);
+        circleImageView = findViewById(R.id.circle_image_view);
+        bottomSheetBehavior = BottomSheetBehavior.from(linearLayout);
+        bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
-    public class SliderTimer extends TimerTask {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        dataRef = firebaseDatabase.getReference().child("Category");
 
-        @Override
-        public void run() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (vPSlider.getCurrentItem() < imageList.size() - 1){
-                        vPSlider.setCurrentItem(vPSlider.getCurrentItem() + 1);
-                    }
-                    else{
-                        vPSlider.setCurrentItem(0);
-                    }
-                }
-            });
-        }
+        userUtil = new UserUtil(this);
     }
 }
