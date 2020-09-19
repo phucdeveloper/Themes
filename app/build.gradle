@@ -31,20 +31,20 @@ dependencies {
 
     //library firebase
     implementation 'com.google.firebase:firebase-database:19.4.0'
-    implementation 'com.google.firebase:firebase-auth:19.3.2'
+    implementation 'com.google.firebase:firebase-auth:19.4.0'
     implementation 'com.google.firebase:firebase-storage:19.2.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    //circular image view library
     implementation 'com.github.abdularis:circularimageview:1.5'
-    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
-    implementation 'com.github.joielechong:countrycodepicker:2.4.2'
 
+    //country code picker library
+    implementation 'com.hbb20:ccp:2.4.0'
 
-    implementation 'com.github.ittianyu:BottomNavigationViewEx:2.0.4'
-
-    implementation 'com.github.zhpanvip:viewpagerindicator:1.0.4'
+    //blur library
+    implementation 'jp.wasabeef:blurry:3.0.0'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -4,16 +4,13 @@
     <string name="title">Today let\'s explore together.</string>
     <string name="discover">Discover</string>
     <string name="sign_in">Sign in</string>
-    <string name="sign_up">Sign up</string>
     <string name="slogan">Welcome to Themes App</string>
     <string name="don_t_have_account">Don\'t have account?</string>
     <string name="create_a_new_account">Create a new account</string>
     <string name="forgot_password">Forgot password?</string>
-
-
-    <string name="facebook_app_id">678347469703380</string>
-    <string name="fb_login_protocol_scheme">fb678347469703380</string>
     <string name="sign_in_with_phone_number">Sign in with phone number</string>
+    <string name="sign_in_with_facebook_account">Sign in with facebook account</string>
+    <string name="sign_in_with_google_account">Sign in with google account</string>
     <string name="enter_your_phone_number">Enter your phone number</string>
     <string name="launcher">Launcher</string>
     <string name="user">User</string>
@@ -26,6 +23,7 @@
     <string name="_new">New</string>
     <string name="add_favorite">Add favorite</string>
     <string name="enable_mode_auto_set_wallpaper">Enable mode auto set wallpaper</string>
+    <string name="enter_your_password">Enter your password</string>
 
     <string-array name="dialing_country_code">
         <item>BE(+32)</item>

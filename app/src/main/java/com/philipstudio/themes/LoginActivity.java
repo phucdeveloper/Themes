@@ -1,76 +1,38 @@
 package com.philipstudio.themes;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
 
-import com.google.android.material.tabs.TabLayout;
 import com.philipstudio.themes.fragment.SignInFragment;
-import com.philipstudio.themes.fragment.SignUpFragment;
+import com.philipstudio.themes.utils.BlurBuilder;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TabLayout tabLayout;
-    ViewPager viewPager;
+    FrameLayout frameLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
+        frameLayout = findViewById(R.id.frame_layout_container);
 
-        initView();
+        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        Bitmap blurredBitmap = BlurBuilder.blur(this, originalBitmap);
+        frameLayout.setBackground(new BitmapDrawable(getResources(), blurredBitmap));
 
-        setUp();
-    }
-
-    private void setUp(){
-        PagerAdapter adapter = new PagerAdapter(getSupportFragmentManager(),  FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
-    }
-
-    public class PagerAdapter extends FragmentPagerAdapter{
-
-        public PagerAdapter(@NonNull FragmentManager fm, int behavior) {
-            super(fm, behavior);
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            switch (position){
-                case 0: return new SignInFragment();
-                case 1: return new SignUpFragment();
-            }
-            return null;
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-
-        @Nullable
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position){
-                case 0: return "Sign In";
-                case 1: return "Sign Up";
-            }
-            return null;
-        }
-    }
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_layout_container, new SignInFragment())
+                .commit();
 
 
-
-    private void initView() {
-        tabLayout = findViewById(R.id.tab_layout);
-        viewPager = findViewById(R.id.view_pager_container);
     }
 }
