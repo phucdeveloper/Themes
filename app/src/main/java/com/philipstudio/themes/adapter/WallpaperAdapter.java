@@ -1,6 +1,7 @@
 package com.philipstudio.themes.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.philipstudio.themes.R;
+import com.philipstudio.themes.activity.PreviewActivity;
 
 import java.util.ArrayList;
 
@@ -53,6 +55,17 @@ public class WallpaperAdapter extends RecyclerView.Adapter<WallpaperAdapter.View
 
             imageView = itemView.findViewById(R.id.item_image_view);
             textView = itemView.findViewById(R.id.item_text_view);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    Intent intent = new Intent(context, PreviewActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("data", arrayList.get(position));
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 }

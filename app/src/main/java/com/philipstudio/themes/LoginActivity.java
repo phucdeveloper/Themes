@@ -2,20 +2,22 @@ package com.philipstudio.themes;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.philipstudio.themes.fragment.SignInFragment;
-import com.philipstudio.themes.utils.BlurBuilder;
+import com.philipstudio.themes.fragment.SignInPhoneNumberFragment;
+import com.philipstudio.themes.fragment.UserFragment;
+import com.philipstudio.themes.utils.UserUtil;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements SignInFragment.OnButtonSignInClickListener {
 
     FrameLayout frameLayout;
+
+    UserUtil userUtil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +26,29 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
         frameLayout = findViewById(R.id.frame_layout_container);
+        userUtil = new UserUtil(this);
 
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.background);
-        Bitmap blurredBitmap = BlurBuilder.blur(this, originalBitmap);
-        frameLayout.setBackground(new BitmapDrawable(getResources(), blurredBitmap));
+        if (TextUtils.isEmpty(userUtil.getUserUtil())) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_layout_container, new SignInFragment())
+                    .commit();
+        } else {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_layout_container, new UserFragment())
+                    .commit();
+        }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.frame_layout_container, new SignInFragment())
-                .commit();
 
+    }
 
+    @Override
+    public void onButtonClick(int number) {
+        if (number == 0) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.frame_layout_container, new SignInPhoneNumberFragment())
+                    .commit();
+        }
     }
 }

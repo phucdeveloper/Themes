@@ -29,7 +29,7 @@ public class DetailActivity extends AppCompatActivity {
 
     RecyclerView rVListCategorySuggestion, rVListWallpaper;
     TextView txtNameCategory;
-    ImageView imgFavorite, imgBack;
+    ImageView imgFavorite;
     LinearLayout linearLayout;
 
     BottomSheetBehavior<LinearLayout> bottomSheetBehavior;
@@ -46,6 +46,7 @@ public class DetailActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
+        txtNameCategory.setText(name);
 
         setUpRecyclerViewListWallpaper(name);
 

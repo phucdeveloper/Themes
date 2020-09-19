@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/linear_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,6 +16,7 @@
         android:src="@drawable/image_icon" />
 
     <EditText
+        android:textColor="#ffffff"
         android:id="@+id/edit_text_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,6 +31,7 @@
         android:textColorHint="#C3C1C1" />
 
     <EditText
+        android:textColor="#ffffff"
         android:id="@+id/edit_text_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -44,7 +47,7 @@
         android:textColorHint="#C3C1C1" />
 
     <Button
-        android:id="@+id/button_login_with_email"
+        android:id="@+id/button_sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -67,7 +70,7 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/button_login_with_phone_number"
+        android:id="@+id/button_sign_in_with_phone_number"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
@@ -82,7 +85,7 @@
         tools:ignore="RtlSymmetry" />
 
     <Button
-        android:id="@+id/button_login_with_facebook_account"
+        android:id="@+id/button_sign_in_with_facebook_account"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
@@ -96,7 +99,7 @@
         tools:ignore="RtlSymmetry" />
 
     <Button
-        android:id="@+id/button_login_with_google_account"
+        android:id="@+id/button_sign_in_with_google_account"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
